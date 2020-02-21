@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tms.ssm.mapper.TestMapper">
+  <resultMap id="BaseResultMap" type="com.tms.ssm.po.Test">
+    <id column="tst_no" jdbcType="VARCHAR" property="tstNo" />
+    <result column="tst_name" jdbcType="VARCHAR" property="tstName" />
+    <result column="tst_time" jdbcType="VARCHAR" property="tstTime" />
+    <result column="tst_type" jdbcType="VARCHAR" property="tstType" />
+    <result column="tst_dif" jdbcType="INTEGER" property="tstDif" />
+    <result column="tst_num" jdbcType="INTEGER" property="tstNum" />
+    <result column="tst_score" jdbcType="INTEGER" property="tstScore" />
+    <result column="tst_detail" jdbcType="VARCHAR" property="tstDetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    tst_no, tst_name, tst_time, tst_type, tst_dif, tst_num, tst_score, tst_detail
+  </sql>
+  <select id="selectByExample" parameterType="com.tms.ssm.po.TestExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from test
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from test
+    where tst_no = #{tstNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from test
+    where tst_no = #{tstNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tms.ssm.po.TestExample">
+    delete from test
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tms.ssm.po.Test">
+    insert into test (tst_no, tst_name, tst_time, 
+      tst_type, tst_dif, tst_num, 
+      tst_score, tst_detail)
+    values (#{tstNo,jdbcType=VARCHAR}, #{tstName,jdbcType=VARCHAR}, #{tstTime,jdbcType=VARCHAR}, 
+      #{tstType,jdbcType=VARCHAR}, #{tstDif,jdbcType=INTEGER}, #{tstNum,jdbcType=INTEGER}, 
+      #{tstScore,jdbcType=INTEGER}, #{tstDetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tms.ssm.po.Test">
+    insert into test
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tstNo != null">
+        tst_no,
+      </if>
+      <if test="tstName != null">
+        tst_name,
+      </if>
+      <if test="tstTime != null">
+        tst_time,
+      </if>
+      <if test="tstType != null">
+        tst_type,
+      </if>
+      <if test="tstDif != null">
+        tst_dif,
+      </if>
+      <if test="tstNum != null">
+        tst_num,
+      </if>
+      <if test="tstScore != null">
+        tst_score,
+      </if>
+      <if test="tstDetail != null">
+        tst_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tstNo != null">
+        #{tstNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tstName != null">
+        #{tstName,jdbcType=VARCHAR},
+      </if>
+      <if test="tstTime != null">
+        #{tstTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tstType != null">
+        #{tstType,jdbcType=VARCHAR},
+      </if>
+      <if test="tstDif != null">
+        #{tstDif,jdbcType=INTEGER},
+      </if>
+      <if test="tstNum != null">
+        #{tstNum,jdbcType=INTEGER},
+      </if>
+      <if test="tstScore != null">
+        #{tstScore,jdbcType=INTEGER},
+      </if>
+      <if test="tstDetail != null">
+        #{tstDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tms.ssm.po.TestExample" resultType="java.lang.Long">
+    select count(*) from test
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update test
+    <set>
+      <if test="record.tstNo != null">
+        tst_no = #{record.tstNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tstName != null">
+        tst_name = #{record.tstName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tstTime != null">
+        tst_time = #{record.tstTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tstType != null">
+        tst_type = #{record.tstType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tstDif != null">
+        tst_dif = #{record.tstDif,jdbcType=INTEGER},
+      </if>
+      <if test="record.tstNum != null">
+        tst_num = #{record.tstNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.tstScore != null">
+        tst_score = #{record.tstScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.tstDetail != null">
+        tst_detail = #{record.tstDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update test
+    set tst_no = #{record.tstNo,jdbcType=VARCHAR},
+      tst_name = #{record.tstName,jdbcType=VARCHAR},
+      tst_time = #{record.tstTime,jdbcType=VARCHAR},
+      tst_type = #{record.tstType,jdbcType=VARCHAR},
+      tst_dif = #{record.tstDif,jdbcType=INTEGER},
+      tst_num = #{record.tstNum,jdbcType=INTEGER},
+      tst_score = #{record.tstScore,jdbcType=INTEGER},
+      tst_detail = #{record.tstDetail,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tms.ssm.po.Test">
+    update test
+    <set>
+      <if test="tstName != null">
+        tst_name = #{tstName,jdbcType=VARCHAR},
+      </if>
+      <if test="tstTime != null">
+        tst_time = #{tstTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tstType != null">
+        tst_type = #{tstType,jdbcType=VARCHAR},
+      </if>
+      <if test="tstDif != null">
+        tst_dif = #{tstDif,jdbcType=INTEGER},
+      </if>
+      <if test="tstNum != null">
+        tst_num = #{tstNum,jdbcType=INTEGER},
+      </if>
+      <if test="tstScore != null">
+        tst_score = #{tstScore,jdbcType=INTEGER},
+      </if>
+      <if test="tstDetail != null">
+        tst_detail = #{tstDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tst_no = #{tstNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tms.ssm.po.Test">
+    update test
+    set tst_name = #{tstName,jdbcType=VARCHAR},
+      tst_time = #{tstTime,jdbcType=VARCHAR},
+      tst_type = #{tstType,jdbcType=VARCHAR},
+      tst_dif = #{tstDif,jdbcType=INTEGER},
+      tst_num = #{tstNum,jdbcType=INTEGER},
+      tst_score = #{tstScore,jdbcType=INTEGER},
+      tst_detail = #{tstDetail,jdbcType=VARCHAR}
+    where tst_no = #{tstNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tms.ssm.mapper.ProblemMapper">
+  <resultMap id="BaseResultMap" type="com.tms.ssm.po.Problem">
+    <id column="pro_no" jdbcType="VARCHAR" property="proNo" />
+    <result column="pro_detail" jdbcType="VARCHAR" property="proDetail" />
+    <result column="pro_ansno" jdbcType="VARCHAR" property="proAnsno" />
+    <result column="pro_keyw" jdbcType="VARCHAR" property="proKeyw" />
+    <result column="pro_dif" jdbcType="INTEGER" property="proDif" />
+    <result column="cha_no" jdbcType="VARCHAR" property="chaNo" />
+    <result column="cha_title" jdbcType="VARCHAR" property="chaTitle" />
+    <result column="cha_mpoint" jdbcType="VARCHAR" property="chaMpoint" />
+    <result column="pro_type" jdbcType="VARCHAR" property="proType" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pro_no, pro_detail, pro_ansno, pro_keyw, pro_dif, cha_no, cha_title, cha_mpoint, 
+    pro_type
+  </sql>
+  <select id="selectByExample" parameterType="com.tms.ssm.po.ProblemExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from problem
+    where pro_no = #{proNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from problem
+    where pro_no = #{proNo,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tms.ssm.po.ProblemExample">
+    delete from problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tms.ssm.po.Problem">
+    insert into problem (pro_no, pro_detail, pro_ansno, 
+      pro_keyw, pro_dif, cha_no, 
+      cha_title, cha_mpoint, pro_type
+      )
+    values (#{proNo,jdbcType=VARCHAR}, #{proDetail,jdbcType=VARCHAR}, #{proAnsno,jdbcType=VARCHAR}, 
+      #{proKeyw,jdbcType=VARCHAR}, #{proDif,jdbcType=INTEGER}, #{chaNo,jdbcType=VARCHAR}, 
+      #{chaTitle,jdbcType=VARCHAR}, #{chaMpoint,jdbcType=VARCHAR}, #{proType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tms.ssm.po.Problem">
+    insert into problem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="proNo != null">
+        pro_no,
+      </if>
+      <if test="proDetail != null">
+        pro_detail,
+      </if>
+      <if test="proAnsno != null">
+        pro_ansno,
+      </if>
+      <if test="proKeyw != null">
+        pro_keyw,
+      </if>
+      <if test="proDif != null">
+        pro_dif,
+      </if>
+      <if test="chaNo != null">
+        cha_no,
+      </if>
+      <if test="chaTitle != null">
+        cha_title,
+      </if>
+      <if test="chaMpoint != null">
+        cha_mpoint,
+      </if>
+      <if test="proType != null">
+        pro_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="proNo != null">
+        #{proNo,jdbcType=VARCHAR},
+      </if>
+      <if test="proDetail != null">
+        #{proDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="proAnsno != null">
+        #{proAnsno,jdbcType=VARCHAR},
+      </if>
+      <if test="proKeyw != null">
+        #{proKeyw,jdbcType=VARCHAR},
+      </if>
+      <if test="proDif != null">
+        #{proDif,jdbcType=INTEGER},
+      </if>
+      <if test="chaNo != null">
+        #{chaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chaTitle != null">
+        #{chaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="chaMpoint != null">
+        #{chaMpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="proType != null">
+        #{proType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tms.ssm.po.ProblemExample" resultType="java.lang.Long">
+    select count(*) from problem
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update problem
+    <set>
+      <if test="record.proNo != null">
+        pro_no = #{record.proNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proDetail != null">
+        pro_detail = #{record.proDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proAnsno != null">
+        pro_ansno = #{record.proAnsno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proKeyw != null">
+        pro_keyw = #{record.proKeyw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proDif != null">
+        pro_dif = #{record.proDif,jdbcType=INTEGER},
+      </if>
+      <if test="record.chaNo != null">
+        cha_no = #{record.chaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chaTitle != null">
+        cha_title = #{record.chaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chaMpoint != null">
+        cha_mpoint = #{record.chaMpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proType != null">
+        pro_type = #{record.proType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update problem
+    set pro_no = #{record.proNo,jdbcType=VARCHAR},
+      pro_detail = #{record.proDetail,jdbcType=VARCHAR},
+      pro_ansno = #{record.proAnsno,jdbcType=VARCHAR},
+      pro_keyw = #{record.proKeyw,jdbcType=VARCHAR},
+      pro_dif = #{record.proDif,jdbcType=INTEGER},
+      cha_no = #{record.chaNo,jdbcType=VARCHAR},
+      cha_title = #{record.chaTitle,jdbcType=VARCHAR},
+      cha_mpoint = #{record.chaMpoint,jdbcType=VARCHAR},
+      pro_type = #{record.proType,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tms.ssm.po.Problem">
+    update problem
+    <set>
+      <if test="proDetail != null">
+        pro_detail = #{proDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="proAnsno != null">
+        pro_ansno = #{proAnsno,jdbcType=VARCHAR},
+      </if>
+      <if test="proKeyw != null">
+        pro_keyw = #{proKeyw,jdbcType=VARCHAR},
+      </if>
+      <if test="proDif != null">
+        pro_dif = #{proDif,jdbcType=INTEGER},
+      </if>
+      <if test="chaNo != null">
+        cha_no = #{chaNo,jdbcType=VARCHAR},
+      </if>
+      <if test="chaTitle != null">
+        cha_title = #{chaTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="chaMpoint != null">
+        cha_mpoint = #{chaMpoint,jdbcType=VARCHAR},
+      </if>
+      <if test="proType != null">
+        pro_type = #{proType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pro_no = #{proNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tms.ssm.po.Problem">
+    update problem
+    set pro_detail = #{proDetail,jdbcType=VARCHAR},
+      pro_ansno = #{proAnsno,jdbcType=VARCHAR},
+      pro_keyw = #{proKeyw,jdbcType=VARCHAR},
+      pro_dif = #{proDif,jdbcType=INTEGER},
+      cha_no = #{chaNo,jdbcType=VARCHAR},
+      cha_title = #{chaTitle,jdbcType=VARCHAR},
+      cha_mpoint = #{chaMpoint,jdbcType=VARCHAR},
+      pro_type = #{proType,jdbcType=VARCHAR}
+    where pro_no = #{proNo,jdbcType=VARCHAR}
+  </update>
+</mapper>
